@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 405c8f4dbca7484448b2c4d31d9a7def, type: 3}
+  m_Name: E_Mage
+  m_EditorClassIdentifier: 
+  UnitName: Celica
+  UnitPortrait: {fileID: 21300000, guid: 1e52ba0829540514fbcce3036f33eedf, type: 3}
+  UnitTeam: 1
+  UnitClass: 4
+  EquippedWeapon: {fileID: 11400000, guid: 76edba17eee52f3479f842266c46677e, type: 2}
+  ClassLevel: 1
+  HealthPointsBaseValue: 22
+  MovementBaseValue: 6
+  AttackBaseValue: 16
+  CriticalRateBaseValue: 4
+  HitRateBaseValue: 112
+  AvoidRateBaseValue: 13
+  StrengthBaseValue: 12
+  SpeedBaseValue: 7
+  MagicBaseValue: 8
+  LuckBaseValue: 5
+  SkillBaseValue: 13
+  DefenseBaseValue: 7
+  ResistanceBaseValue: 12
+  RatingValue: 64

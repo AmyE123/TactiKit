@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 405c8f4dbca7484448b2c4d31d9a7def, type: 3}
+  m_Name: Mage
+  m_EditorClassIdentifier: 
+  UnitName: Alice
+  UnitPortrait: {fileID: 21300000, guid: 09192f1bad1b2e24180925eaa032db2e, type: 3}
+  UnitTeam: 0
+  UnitClass: 4
+  EquippedWeapon: {fileID: 11400000, guid: 9ee39f18214f99440a29d046f27e7d45, type: 2}
+  ClassLevel: 3
+  HealthPointsBaseValue: 17
+  MovementBaseValue: 5
+  AttackBaseValue: 14
+  CriticalRateBaseValue: 0
+  HitRateBaseValue: 97
+  AvoidRateBaseValue: 16
+  StrengthBaseValue: 1
+  SpeedBaseValue: 10
+  MagicBaseValue: 11
+  LuckBaseValue: 2
+  SkillBaseValue: 4
+  DefenseBaseValue: 3
+  ResistanceBaseValue: 6
+  RatingValue: 37

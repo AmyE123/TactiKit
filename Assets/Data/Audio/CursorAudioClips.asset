@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 554737d31e427b3408e5980c2ae61f1c, type: 3}
+  m_Name: CursorAudioClips
+  m_EditorClassIdentifier: 
+  Confirm: {fileID: 8300000, guid: e6debd27ac676d346a030d68614e7eaa, type: 3}
+  Cancel: {fileID: 8300000, guid: 9c9856d516e47e34c87a6b546c8d76e7, type: 3}
+  Invalid: {fileID: 8300000, guid: ef8d1dc102a32aa409110603aa7232e3, type: 3}
+  Move1: {fileID: 8300000, guid: 13ea0cfa769547a459036f009cc03375, type: 3}
+  Move2: {fileID: 8300000, guid: 81c6fa4d27a33534b8c8e19c3970400c, type: 3}
+  SelectUnit: {fileID: 8300000, guid: 67d61d0c3f6369847b30bac113affbde, type: 3}

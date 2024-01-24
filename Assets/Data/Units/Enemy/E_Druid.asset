@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 405c8f4dbca7484448b2c4d31d9a7def, type: 3}
+  m_Name: E_Druid
+  m_EditorClassIdentifier: 
+  UnitName: Fernand
+  UnitPortrait: {fileID: 21300000, guid: 719099743fd8d8846aefa2f18cd2e900, type: 3}
+  UnitTeam: 1
+  UnitClass: 1
+  EquippedWeapon: {fileID: 11400000, guid: 7295dc0abbd902b489e54a0180ace594, type: 2}
+  ClassLevel: 2
+  HealthPointsBaseValue: 30
+  MovementBaseValue: 5
+  AttackBaseValue: 8
+  CriticalRateBaseValue: 0
+  HitRateBaseValue: 98
+  AvoidRateBaseValue: 14
+  StrengthBaseValue: 1
+  SpeedBaseValue: 7
+  MagicBaseValue: 5
+  LuckBaseValue: 8
+  SkillBaseValue: 6
+  DefenseBaseValue: 4
+  ResistanceBaseValue: 5
+  RatingValue: 36

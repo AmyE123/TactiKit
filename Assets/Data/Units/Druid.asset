@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 405c8f4dbca7484448b2c4d31d9a7def, type: 3}
+  m_Name: Druid
+  m_EditorClassIdentifier: 
+  UnitName: Dagr
+  UnitPortrait: {fileID: 21300000, guid: bc9f837f47eda70429b72c64832ce72c, type: 3}
+  UnitTeam: 0
+  UnitClass: 1
+  EquippedWeapon: {fileID: 11400000, guid: 58655411b6b878f4db30a0c0aff3c2f7, type: 2}
+  ClassLevel: 2
+  HealthPointsBaseValue: 20
+  MovementBaseValue: 5
+  AttackBaseValue: 15
+  CriticalRateBaseValue: 0
+  HitRateBaseValue: 105
+  AvoidRateBaseValue: 17
+  StrengthBaseValue: 11
+  SpeedBaseValue: 8
+  MagicBaseValue: 0
+  LuckBaseValue: 10
+  SkillBaseValue: 7
+  DefenseBaseValue: 10
+  ResistanceBaseValue: 6
+  RatingValue: 52

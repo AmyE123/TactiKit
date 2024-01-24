@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 405c8f4dbca7484448b2c4d31d9a7def, type: 3}
+  m_Name: Knight
+  m_EditorClassIdentifier: 
+  UnitName: Clive
+  UnitPortrait: {fileID: 21300000, guid: 3af614da3fadf9a4898ab45f6bb6ecce, type: 3}
+  UnitTeam: 0
+  UnitClass: 0
+  EquippedWeapon: {fileID: 11400000, guid: 2449978a48530464ba15020d9e772156, type: 2}
+  ClassLevel: 3
+  HealthPointsBaseValue: 23
+  MovementBaseValue: 4
+  AttackBaseValue: 16
+  CriticalRateBaseValue: 0
+  HitRateBaseValue: 107
+  AvoidRateBaseValue: 10
+  StrengthBaseValue: 11
+  SpeedBaseValue: 3
+  MagicBaseValue: 0
+  LuckBaseValue: 11
+  SkillBaseValue: 8
+  DefenseBaseValue: 11
+  ResistanceBaseValue: 7
+  RatingValue: 51
