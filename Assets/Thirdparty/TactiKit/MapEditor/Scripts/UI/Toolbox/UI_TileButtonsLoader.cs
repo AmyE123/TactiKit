@@ -99,7 +99,13 @@ namespace TactiKit.MapEditor
         private Sprite FindTileImage(string tileName)
         {
             string path = $"{TILE_TEXTURES_DIRECTORY}{tileName}{ASSET_FILE_TYPE}";
-            Texture2D texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            Texture2D texture = null;
+
+#if UNITY_EDITOR
+
+            texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+
+#endif // UNITY_EDITOR
 
             if (texture == null)
             {

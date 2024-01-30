@@ -13,13 +13,18 @@ namespace TactiKit.MapEditor
 
         private bool _mapSpawned = false;
 
+        [SerializeField] private Vector3 _centerOfGrid;
         [SerializeField] private GameObject _defaultTerrainPrefab;
         [SerializeField] private GameObject _gridParent;
         [SerializeField] private GridSerializer _serializer;
         [SerializeField] private string _activeMapName;
 
+        [SerializeField] private CameraManager _cameraManager;
+
         public string ActiveMapName => _activeMapName;
         public bool MapSpawned => _mapSpawned;
+
+        public Vector3 CenterOfGrid => _centerOfGrid;
 
         private void Start()
         {
@@ -208,9 +213,9 @@ namespace TactiKit.MapEditor
             float gridWidth = _maxX - _minX;
             float gridHeight = _maxZ - _minZ;
             Vector3 centerPosition = new Vector3(_minX + gridWidth / 2, 10, _minZ + gridHeight / 2);
+            _centerOfGrid = centerPosition;
 
-            Camera.main.transform.position = centerPosition + new Vector3(0, 10, 0);
-            Camera.main.transform.LookAt(centerPosition);
+            _cameraManager.ResetCameras();          
         }
     }
 }

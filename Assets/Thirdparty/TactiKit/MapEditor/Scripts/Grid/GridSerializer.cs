@@ -85,8 +85,12 @@ namespace TactiKit.MapEditor
             string path = $"{DEFAULT_DIRECTORY}{fullFileName}";
             File.WriteAllText(path, data);
 
+#if UNITY_EDITOR
+
             // Refresh the Asset Database
             AssetDatabase.Refresh();
+
+#endif // UNITY_EDITOR
 
             string newFileName = fileName + mapIndex;
             _gridSpawner.SetActiveMap(newFileName);
@@ -100,8 +104,12 @@ namespace TactiKit.MapEditor
             string path = $"{DEFAULT_DIRECTORY}{fullFileName}";
             File.WriteAllText(path, data);
 
+#if UNITY_EDITOR
+
             // Refresh the Asset Database
             AssetDatabase.Refresh();
+
+#endif // UNITY_EDITOR
 
             Debug.Log("[TACTIKIT/MapEditor] Map saved to Asset Database at: " + path);
         }

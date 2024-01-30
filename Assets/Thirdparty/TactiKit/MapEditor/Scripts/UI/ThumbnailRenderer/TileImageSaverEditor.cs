@@ -1,8 +1,8 @@
+#if UNITY_EDITOR
 namespace TactiKit.MapEditor
 {
     using UnityEditor;
     using UnityEngine;
-    using Unity.EditorCoroutines.Editor;
 
     public class TileImageSaverEditor
     {
@@ -33,3 +33,4 @@ namespace TactiKit.MapEditor
         }
     }
 }
+#endif // UNITY_EDITOR

@@ -12,9 +12,19 @@ namespace TactiKit.MapEditor
         private GameObject _gridParent; // Reference to the Grid GameObject
         private ToolboxTileSelectionHandler _tileSelectionHandler;
         private UIManager _uiManager;
+        private Material _originalMaterial;
+
+        private Transform _tileParent;
+
+        [SerializeField] private Material _highlightMaterial;        
+        [SerializeField] private Renderer _tileRenderer;
 
         private void Start()
         {
+            _tileRenderer = GetComponent<Renderer>();
+            _originalMaterial = _tileRenderer.material;
+            _tileParent = transform.parent;
+
             // Find the TileSelectionHandler in the scene.
             _tileSelectionHandler = FindObjectOfType<ToolboxTileSelectionHandler>();
             _uiManager = FindObjectOfType<UIManager>();
@@ -30,6 +40,21 @@ namespace TactiKit.MapEditor
         private void Update()
         {
             _selectedToolboxTile = _tileSelectionHandler.CurrentlySelectedTilePrefab;
+        }
+
+        private void OnMouseOver()
+        {
+            _tileRenderer.material = _highlightMaterial;
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                _tileParent.Rotate(0, 90, 0, Space.Self);
+            }
+        }
+
+        private void OnMouseExit()
+        {
+            _tileRenderer.material = _originalMaterial;
         }
 
         private void OnMouseDown()
@@ -50,7 +75,7 @@ namespace TactiKit.MapEditor
                 _uiManager.SetUnsavedChanges();
 
                 // Destroy the old tile
-                Destroy(gameObject);
+                Destroy(_tileParent.gameObject);
             }
         }
     }
