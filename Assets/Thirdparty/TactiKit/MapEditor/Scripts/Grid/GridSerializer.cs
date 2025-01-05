@@ -82,36 +82,49 @@ namespace TactiKit.MapEditor
         private void SaveData(string data, int mapIndex, string fileName = DEFAULT_FILE_NAME)
         {
             string fullFileName = $"{fileName}{mapIndex}{DEFAULT_FILE_TYPE}";
-            string path = $"{DEFAULT_DIRECTORY}{fullFileName}";
+            string path = GetSavePath(fullFileName);
+
             File.WriteAllText(path, data);
 
 #if UNITY_EDITOR
-
-            // Refresh the Asset Database
             AssetDatabase.Refresh();
-
 #endif // UNITY_EDITOR
 
             string newFileName = fileName + mapIndex;
             _gridSpawner.SetActiveMap(newFileName);
 
-            Debug.Log("[TACTIKIT/MapEditor] Map saved to Asset Database at: " + path);
+            Debug.Log($"[TACTIKIT/MapEditor] Map saved to: {path}");
         }
 
         private void SaveData(string data, string fileName = DEFAULT_FILE_NAME)
         {
             string fullFileName = $"{fileName}{DEFAULT_FILE_TYPE}";
-            string path = $"{DEFAULT_DIRECTORY}{fullFileName}";
+            string path = GetSavePath(fullFileName);
+
             File.WriteAllText(path, data);
 
 #if UNITY_EDITOR
-
-            // Refresh the Asset Database
             AssetDatabase.Refresh();
-
 #endif // UNITY_EDITOR
 
-            Debug.Log("[TACTIKIT/MapEditor] Map saved to Asset Database at: " + path);
+            Debug.Log($"[TACTIKIT/MapEditor] Map saved to: {path}");
+        }
+
+        private string GetSavePath(string fileName)
+        {
+#if UNITY_EDITOR
+            string directoryPath = DEFAULT_MAPS_DIRECTORY;
+#else
+            string buildFolderPath = Path.GetDirectoryName(Application.dataPath);
+            string directoryPath = Path.Combine(buildFolderPath, DEFAULT_MAPS_DIRECTORY);
+#endif // UNITY_EDITOR
+
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            return Path.Combine(directoryPath, fileName);
         }
     }
 

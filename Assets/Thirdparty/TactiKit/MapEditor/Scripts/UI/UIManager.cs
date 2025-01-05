@@ -5,7 +5,11 @@ namespace TactiKit.MapEditor
     using UnityEngine;
     using UnityEditor;
     using UnityEngine.UI;
+    using DG.Tweening.Plugins.Core.PathCore;
 
+    /// <summary>
+    /// A class which handles the majority of the UI for the map editor.
+    /// </summary>
     public class UIManager : MonoBehaviour
     {
         private bool _hasSelectedMap = false;
@@ -30,7 +34,9 @@ namespace TactiKit.MapEditor
         [SerializeField] private PopupManager SaveAsPopupManager;
 
         [Header("Load Map Parameters")]
-        [SerializeField] private TMP_InputField _loadMapFilePathText;
+        [SerializeField] private UI_LoadButtonsLoader _loadButtonsLoader;
+        [SerializeField] private GameObject _loadMapScrollView;
+        [SerializeField] private string _loadMapFilePath;
 
         [Header("Create New Map Parameters")]
         [SerializeField] private TMP_InputField _mapNameText;
@@ -66,6 +72,7 @@ namespace TactiKit.MapEditor
 
         public void OpenLoadMapPopup()
         {
+            _loadButtonsLoader.RefreshMapButtons();
             LoadMapPopupManager.ShowPopup();
             _toolboxManager.HideToolbox();
         }
@@ -75,36 +82,34 @@ namespace TactiKit.MapEditor
             LoadMapPopupManager.HidePopup();
         }
 
-        public void SelectMapFromFiles()
+        /// <summary>
+        /// Selects a map to load if the load button is pressed.
+        /// </summary>
+        /// <param name="filePath"></param>
+        public void SelectMapFromFiles(string filePath)
         {
-#if UNITY_EDITOR
-            // Open the file panel in the Unity project's "Assets" directory
-            string initialPath = Application.dataPath;
-            string path = EditorUtility.OpenFilePanel("Select a Map File", initialPath, "json");
-
-            if (!string.IsNullOrEmpty(path))
+            if (!string.IsNullOrEmpty(filePath))
             {
-                string jsonContents = System.IO.File.ReadAllText(path);
-                string FileName = Path.GetFileName(path);
-               
-                _loadMapFilePathText.text = FileName;
+                string jsonContents = System.IO.File.ReadAllText(filePath);
+                string FileName = System.IO.Path.GetFileName(filePath);
 
                 string formattedFileName = FileName.Replace(".json", "");
 
-                _setFileName = formattedFileName;              
+                _setFileName = formattedFileName;
                 _gridSpawner.SetActiveMap(formattedFileName);
-                _hasSelectedMap = true;               
+                _hasSelectedMap = true;
             }
-#endif
         }
 
+        /// <summary>
+        /// Loads the selected map.
+        /// </summary>
         public void LoadMapButton()
         {
             if (_hasSelectedMap)
             {
                 Debug.Log("[TACTIKIT/MapEditor] Loaded Map: " + _gridSpawner.ActiveMapName);
                 _gridSpawner.LoadActiveMap();
-                _loadMapFilePathText.text = string.Empty;
                 _hasSelectedMap = false;
                 _iterativeSaving = false;
                 CloseLoadMapPopup();
@@ -183,10 +188,9 @@ namespace TactiKit.MapEditor
 
         private int GetNextGridIndex()
         {
-            string mapsDirectory = "Assets/Resources/Maps";
-            string searchPattern = $"{_setFileName}*.json"; // Pattern to match grid file names
+            string mapsDirectory = Constants.DEFAULT_MAPS_DIRECTORY;
+            string searchPattern = $"{_setFileName}*.json";
 
-            // Ensure the directory exists
             if (!Directory.Exists(mapsDirectory))
             {
                 Directory.CreateDirectory(mapsDirectory);
@@ -198,7 +202,7 @@ namespace TactiKit.MapEditor
 
             foreach (string file in files)
             {
-                string fileName = Path.GetFileNameWithoutExtension(file);
+                string fileName = System.IO.Path.GetFileNameWithoutExtension(file);
                 if (int.TryParse(fileName.Substring(_setFileName.Length), out int fileIndex) && fileIndex > highestIndex)
                 {
                     highestIndex = fileIndex;

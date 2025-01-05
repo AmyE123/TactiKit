@@ -1,11 +1,14 @@
 namespace TactiKit.MapEditor
 {
 #if UNITY_EDITOR
-    using UnityEngine;    
-    using System.Collections;
+    using UnityEngine;
     using UnityEditor;
+    using System.IO;
     using static TactiKit.MapEditor.Constants;
 
+    /// <summary>
+    /// A class for saving images of tile prefabs to be used as thumbnails in the UI.
+    /// </summary>
     public class TileImageSaver : MonoBehaviour
     {
         private Vector3 _hiddenPosition = new Vector3(1000, 1000, 1000);
@@ -24,64 +27,66 @@ namespace TactiKit.MapEditor
             }
         }
 
-        private void RefreshAllTiles()
-        {
-            ConfigureCamera();
-            StartCoroutine(CaptureAndSaveAllTilesCoroutine(_renderCamera.targetTexture));
-        }
-
-        private void ConfigureCamera()
-        {
-            _renderCamera.clearFlags = CameraClearFlags.SolidColor;
-            _renderCamera.backgroundColor = new Color(0, 0, 0, 0);
-            _renderCamera.fieldOfView = _cameraFOV;
-        }
-
-        public void CaptureAndSaveAllTiles()
+        /// <summary>
+        /// Captures and re-saves all tiles at once.
+        /// </summary>
+        /// <param name="targetDirectory">The target directory to save the tile output.</param>
+        public void CaptureAndSaveAllTiles(string targetDirectory = null)
         {
             GameObject[] tilePrefabs = Resources.LoadAll<GameObject>(TILE_RESOURCES_FOLDER);
 
             foreach (GameObject prefab in tilePrefabs)
             {
-                CaptureAndSaveTile(prefab);
+                CaptureAndSaveTile(prefab, targetDirectory);
             }
         }
 
-        public void CaptureAndSaveTile(GameObject tilePrefab)
+        /// <summary>
+        /// Captures and re-saves a single tile.
+        /// </summary>
+        /// <param name="tilePrefab">The tile to be saved.</param>
+        /// <param name="targetDirectory">The target directory to save the tile output.</param>
+        public void CaptureAndSaveTile(GameObject tilePrefab, string targetDirectory = null)
         {
             GameObject instance = InstantiateTilePrefab(tilePrefab);
 
             PositionAndAimCamera(instance);
 
-            // Manually render the camera and capture the image
             _renderCamera.Render();
-            CaptureTileImage(_renderCamera.targetTexture);
+            Texture2D texture = CaptureTileImage(_renderCamera.targetTexture);
 
-            CaptureAndProcessTileImage(_renderCamera.targetTexture, tilePrefab.name);
-            DestroyImmediate(instance);
-        }
-
-        private IEnumerator CaptureAndSaveAllTilesCoroutine(RenderTexture renderTexture)
-        {
-            GameObject[] tilePrefabs = Resources.LoadAll<GameObject>(TILE_RESOURCES_FOLDER);
-
-            foreach (GameObject prefab in tilePrefabs)
+            if (string.IsNullOrEmpty(targetDirectory))
             {
-                yield return StartCoroutine(CaptureAndSaveTileCoroutine(renderTexture, prefab));
+                SaveTextureAsPNG(texture, tilePrefab.name);
             }
-        }
-
-        private IEnumerator CaptureAndSaveTileCoroutine(RenderTexture renderTexture, GameObject tilePrefab)
-        {
-            GameObject instance = InstantiateTilePrefab(tilePrefab);
-
-            PositionAndAimCamera(instance);
-
-            yield return new WaitForEndOfFrame();
-
-            CaptureAndProcessTileImage(renderTexture, tilePrefab.name);
+            else
+            {
+                SaveTextureAsPNG(texture, tilePrefab.name, targetDirectory);
+            }
 
             DestroyImmediate(instance);
+        }
+
+        /// <summary>
+        /// Captures a tile image as a PNG.
+        /// </summary>
+        /// <param name="renderTexture">The renderTexture of the originally rendered tile.</param>
+        /// <returns></returns>
+        public byte[] CaptureTileImageAsPNG(RenderTexture renderTexture)
+        {
+            Texture2D texture = CaptureTileImage(renderTexture);
+            return texture.EncodeToPNG();
+        }
+
+        private void SaveTextureAsPNG(Texture2D texture, string prefabName, string targetDirectory = null)
+        {
+            string folderPath = targetDirectory ?? TILE_TEXTURES_DIRECTORY;
+            string pngPath = Path.Combine(folderPath, $"{prefabName}.png");
+
+            byte[] pngData = texture.EncodeToPNG();
+            Directory.CreateDirectory(folderPath);
+            File.WriteAllBytes(pngPath, pngData);
+            Debug.Log($"[TACTIKIT/MapEditor] Saved PNG file: {pngPath}");
         }
 
         private GameObject InstantiateTilePrefab(GameObject prefab)
@@ -95,12 +100,6 @@ namespace TactiKit.MapEditor
             _renderCamera.transform.position = _hiddenPosition + new Vector3(0, _cameraDistance, -_cameraDistance);
             Vector3 lookAtPoint = target.transform.position + Vector3.up * _yOffset;
             _renderCamera.transform.LookAt(lookAtPoint);
-        }
-
-        private void CaptureAndProcessTileImage(RenderTexture renderTexture, string prefabName)
-        {
-            Texture2D texture = CaptureTileImage(renderTexture);
-            SaveTextureAsAsset(texture, prefabName);
         }
 
         private Texture2D CaptureTileImage(RenderTexture renderTexture)

@@ -7,6 +7,10 @@ namespace TactiKit.MapEditor
     using UnityEngine.UI;
     using UnityEngine.UIElements;
     using static TactiKit.MapEditor.Constants;
+
+    /// <summary>
+    /// A UI class for tile buttons which populate within the toolbox.
+    /// </summary>
     public class UI_TileButtonsLoader : MonoBehaviour
     {
         [SerializeField] private ToolboxTileSelectionHandler _tileSelectionHandler;
@@ -51,6 +55,7 @@ namespace TactiKit.MapEditor
                 button.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => SelectTab(name));
             }
         }
+
         private void LoadTileButtons(Transform contentParent, GameObject buttonPrefab, bool ignoreTileType = false, bool isToolboxTile = true)
         {
             ClearContent(contentParent);
@@ -98,14 +103,32 @@ namespace TactiKit.MapEditor
 
         private Sprite FindTileImage(string tileName)
         {
-            string path = $"{TILE_TEXTURES_DIRECTORY}{tileName}{ASSET_FILE_TYPE}";
             Texture2D texture = null;
+            string folderPath;
+            string filePath;
 
 #if UNITY_EDITOR
-
-            texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-
+            folderPath = $"{Application.dataPath}/{TILE_TEXTURES_DIRECTORY}".Replace("Assets/Assets", "Assets");
+#else
+            folderPath = $"{Application.dataPath}/../{TILE_TEXTURES_DIRECTORY}";            
 #endif // UNITY_EDITOR
+
+            filePath = $"{folderPath}{tileName}.png";
+
+            if (System.IO.File.Exists(filePath))
+            {
+                byte[] fileData = System.IO.File.ReadAllBytes(filePath);
+                texture = new Texture2D(2, 2);
+                if (!texture.LoadImage(fileData))
+                {
+                    Debug.LogError($"[TACTIKIT/MapEditor] Failed to load tile texture from file: {filePath}");
+                    texture = null;
+                }
+            }
+            else
+            {
+                Debug.LogError($"[TACTIKIT/MapEditor] Tile texture not found at: {filePath}. Ensure the PNG exists in the expected folder.");
+            }
 
             if (texture == null)
             {
@@ -131,7 +154,6 @@ namespace TactiKit.MapEditor
             {
                 _toolboxManager.HideToolbox();
             }
-
         }
     }
 }

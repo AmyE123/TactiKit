@@ -78,7 +78,7 @@ namespace TactiKit.MapEditor
 
         private void SpawnGridTilesFromFile(string gridName)
         {
-            string json = File.ReadAllText($"{DEFAULT_DIRECTORY}{gridName}{DEFAULT_FILE_TYPE}");
+            string json = File.ReadAllText($"{DEFAULT_MAPS_DIRECTORY}{gridName}{DEFAULT_FILE_TYPE}");
             SerializationWrapper<TileObjectData> data = JsonUtility.FromJson<SerializationWrapper<TileObjectData>>(json);
 
             foreach (TileObjectData tileObjectData in data.items)
